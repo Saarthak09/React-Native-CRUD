@@ -1,97 +1,62 @@
-import React, {useEffect, useState} from 'react'
-import {Alert,View, Text,TextInput, StyleSheet, SafeAreaView, Button, FlatList, } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import List from './components/List'
-import uuid from 'react-native-uuid';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Home from './screens/Home';
+import HomeScreen from "./components/HomeScreen";
+import ListScreen from "./components/ListScreen";
+import AddTodoScreen from "./components/AddTodoScreen"
+import UpdateTodoScreen from "./components/UpdateTodoScreen"
+import {todoContext} from './contexts/todoContext';
 
 
-const App=()=>{
-  const [textInput, setTextInput]=useState('')
-  const [day,setDay]=useState('')
-  const [todo, setTodo]=useState([[] as any])
-
-  useEffect(()=>{
-    saveTodo(todo)
-  },[todo])
-  useEffect(()=>{
-    getTodo()
-  },[])
-
-  const saveTodo=async (todo:any)=>{
-    try{
-      const stringyfyTodo=JSON.stringify(todo);
-      await AsyncStorage.setItem('todo',stringyfyTodo)  
-    }
-    catch(e){
-      console.log(e);
-    }
-  }
-
-  const getTodo=async()=>{
-    try{
-      const savedTodo=await AsyncStorage.getItem('todo')
-
-      if(savedTodo!=null){
-        const todos=JSON.parse(savedTodo || "{}");
-        setTodo(todos);
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-    
-  }
-
-  const addTodo=()=>{
-    if(textInput=="" || day==""){
-      Alert.alert("Error","please enter all fields")
-    }
-    else{
-      console.log(textInput)
-      const newTodo={
-        id:uuid.v4(),
-        task:textInput,
-        day:day,
-        completed:false,
-      };
-      setTextInput('')
-      setDay('')
-      setTodo([...todo, newTodo])
-      }
-  }
+// import store from './app/store'
+// import {Provider} from 'react-redux'
 
 
-  const deleteTodo= async(id:any)=>{
-    const newTodo=todo.filter(item=>item.id!=id);
-    setTodo(newTodo)
-  }
+const Stack = createNativeStackNavigator();
+const App = () => {
+  const [todoList, setTodoList]=React.useState([]);
+  return (
+    <todoContext.Provider value={[todoList,setTodoList]}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          // options={{title: 'Welcome'}}
+        />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="AddTodoScreen" component={AddTodoScreen} />
+        <Stack.Screen name="ListScreen" component={ListScreen} />
+        <Stack.Screen name="UpdateTodoScreen" component={UpdateTodoScreen} />
 
-  return(
-    <SafeAreaView>
-    <View style={styles.container}>
-      <Text>CRUD App</Text>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{padding: 20, paddingBottom: 100}}
-        data={todo}
-        renderItem={({item}) => <List todo={item} deleteTodo={deleteTodo}/>}
-      />
-      <TextInput placeholder="Enter Task" value={textInput} onChangeText={text=>setTextInput(text)}/>
-      <TextInput placeholder="Enter Day" value={day} onChangeText={text=>setDay(text)}/>
 
-      <Button
-        title="Add"
-        onPress={addTodo}
-      />
-    </View>
-    </SafeAreaView>
-  )
-}
+      </Stack.Navigator>
+    </NavigationContainer>
+    </todoContext.Provider>
+  );
+};
 
-const styles=StyleSheet.create({
-  container:{
-    padding: 20
-  }
-})
 
 export default App
+
+
+// import * as React from "react";
+// import { View, Text } from "react-native";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import HomeScreen from "./components/HomeScreen";
+// import AboutScreen from "./components/AboutScreen";
+
+// const Stack = createNativeStackNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator>
+//         <Stack.Screen name="Home" component={HomeScreen} />
+//         <Stack.Screen name="About" component={AboutScreen} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }

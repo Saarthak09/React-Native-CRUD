@@ -1,5 +1,6 @@
 import React from 'react';
-
+import * as RootNavigation from '../rootNavigation';
+import UpdateTodoScreen from '../components/UpdateTodoScreen'
 // const COLORS={primary:'#1f145c',white:'#fff',black:'#000000',Green:'#00FF00',red:'#FF0000'};
 import {
   SafeAreaView,StyleSheet, View,Text,TextInput,FlatList
@@ -8,13 +9,13 @@ import {
 import { TouchableOpacity } from 'react-native';
 
 
-const List=({todo, deleteTodo})=>{
+const List=({todo, deleteTodo, updateTodo, navigation})=>{
 return <View>
   <View style={{flex:1}}>
-  <Text> {todo.task}</Text>
-  <Text> {todo.day}</Text>
+  <Text style={styles.txt}> {todo.task}</Text>
+  <Text style={styles.txt}> {todo.day}</Text>
 <View style={{ flexDirection: 'row' , flex:1}}>
- <TouchableOpacity onPress={() => deleteTodo(todo.id)} style={styles.appButtonContainer}>
+ <TouchableOpacity onPress={() => RootNavigation.navigate('UpdateTodoScreen')} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>{"Update"}</Text>
   </TouchableOpacity>
   <TouchableOpacity onPress={() => deleteTodo(todo.id)} style={styles.appButtonContainer}>
@@ -40,7 +41,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
-  }
+  },
+  txt:{
+    color:"#000000",
+    placeholderTextColor:"#000000",
+    textAlign:'center'
+}
+
 });
 
 export default List;
+

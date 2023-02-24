@@ -48,30 +48,3 @@ export default function ListScreen() {
     </SafeAreaView>
   );
 }
-
-
-// const styles=StyleSheet.create({
-//     container:{
-//       padding: 20,
-//       color:"#000000",
-//     //   flex: 1, 
-//       alignItems: "center", 
-//       justifyContent: "center"
-//     },
-//     txt:{
-//         color:"#000000",
-//         // placeholderTextColor:"#000000"
-//     },
-//     header:{
-//         fontSize:16,
-//         color:"#000000",
-//     },
-//     input: {
-//         height: 40,
-//         margin: 12,
-//         borderWidth: 1,
-//         borderRadius: 10,
-//         padding: 10,
-//         color:"#000000"
-//     }
-//   })

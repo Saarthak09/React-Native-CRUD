@@ -1,7 +1,6 @@
 import React from 'react';
 import * as RootNavigation from '../rootNavigation';
 import {styles} from '../styles'
-// const COLORS={primary:'#1f145c',white:'#fff',black:'#000000',Green:'#00FF00',red:'#FF0000'};
 import {
   SafeAreaView,StyleSheet, View,Text,TextInput,FlatList
  

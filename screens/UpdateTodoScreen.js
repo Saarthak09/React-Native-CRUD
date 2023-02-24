@@ -89,10 +89,3 @@ export default function UpdateItem({navigation,route}) {
     );
   }
   
-
-
-//   const styles=StyleSheet.style={
-//     text:{
-//         color: "#000000"
-//     }
-//   }

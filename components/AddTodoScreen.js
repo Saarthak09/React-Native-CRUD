@@ -65,7 +65,7 @@ const styles=StyleSheet.create({
     },
     txt:{
         color:"#000000",
-        placeholderTextColor:"#000000"
+        // placeholderTextColor:"#000000"
     }
 
   })

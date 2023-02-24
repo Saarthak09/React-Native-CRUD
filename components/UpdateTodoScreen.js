@@ -1,37 +1,52 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { TouchableOpacity } from 'react-native';
 import {  SafeAreaView,StyleSheet, View,Text,TextInput,FlatList,Alert,Button} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useState, useContext } from "react";
+import { todoContext  } from "../contexts/todoContext";
+import * as RootNavigation from '../rootNavigation';
+import ListScreen from "./ListScreen";
+
+
+
+const COLORS={primary:'#1f145c',white:'#fff',black:'#000000',Green:'#00FF00',red:'#FF0000'};
+
 
 export default function UpdateItem({navigation,route}) {
-    // const[todos,setTodos]=React.useState([[] 
-    // ]);
-    const [textInputName, setTextInputName] = React.useState('');
-    const [textInputAge, setTextInputAge] = React.useState('');
-    const [textInputDescription, setTextInputDescription] = React.useState('');
-    
+    const [todoList, setTodoList]=useContext(todoContext)
+    const [textInput, setTextInput]=useState()
+    const [day,setDay]=useState()
+    useEffect(()=>{
+        updateTodo(route.params.id)
+      },[todoList])
    
     const updateTodo=(id)=>{
-        const newTodos =todoList.map(item=>{
+    const newTodos =todoList.map(item=>{
+            id=route.params.id
           if(item.id==id)
           
           { 
     
-            if(textInputName!='')
-            item.task=textInputTask
+            if(textInput!='')
+            item.task=textInput
         
-            if(textInputAge!='')
-            item.day=textInputDay            
+            if(day!='')
+            item.day=day            
           }
           return item;
-        })}
+        })
     
+        setTodoList[newTodos]
+    }
   
+    const nav=()=>{
+        RootNavigation.navigate('ListScreen')
+    }
    
     return (
       <SafeAreaView   style={{flex:1,backgroundColor:COLORS.white}}>
-        <View style={styles.listitem}>
-            <View style={{flex:1}}>
+        <View >
+            <View>
                 <TouchableOpacity > 
                 {/* <TouchableOpacity  onPress={() => navigation.navigate('ItemDetails',{ todoId:todo.id,todoName:todo.Name,todoAge:todo.Age,todoDescription:todo.Description })}>  */}
                     <Text style={{fontWeight:'bold', fontSize:15, color:COLORS.primary}} >Task: {route.params.task}   </Text>
@@ -42,20 +57,18 @@ export default function UpdateItem({navigation,route}) {
             </View>
         </View>
         
-      <View style={styles.footer}>
-      <View style={styles.inputContainer}>
+      <View >
+      <View >
       
-        <TextInput placeholderTextColor={COLORS.white} 
-        value={textInputName}
-        placeholder="Update Name" onChangeText={text=>setTextInputName(text)} />
-        <TextInput placeholderTextColor={COLORS.white} placeholder="Update Age"   value={textInputAge} onChangeText={text=>setTextInputAge(text)}/>
-        <TextInput placeholderTextColor={COLORS.white} placeholder="Update Description"   value={textInputDescription} onChangeText={text=>setTextInputDescription(text)}/>
+        <TextInput style={styles.text} value={textInput} placeholder="Update Task" onChangeText={text=>setTextInput(text)} />
+        <TextInput style={styles.text} placeholder="Update day"   value={day} onChangeText={text=>setDay(text)}/>
       </View>
-      <TouchableOpacity onPress={update}>
-        <View style={styles.iconContainer}>
-        {/* <Icon name="add" color="white" size={30} /> */}
-        <Text>Update</Text>
-      
+      <TouchableOpacity>
+        <View >
+        <Button
+        title="Update"
+        onPress={updateTodo}
+        />
         </View>
        </TouchableOpacity>
        </View>
@@ -63,3 +76,10 @@ export default function UpdateItem({navigation,route}) {
     );
   }
   
+
+
+  const styles=StyleSheet.style={
+    text:{
+        color: "#000000"
+    }
+  }

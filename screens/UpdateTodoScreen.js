@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import { todoContext  } from "../contexts/todoContext";
 import * as RootNavigation from '../rootNavigation';
 import ListScreen from "./ListScreen";
+import {styles} from "../styles"
 
 
 
@@ -21,26 +22,37 @@ export default function UpdateItem({navigation,route}) {
       },[todoList])
    
     const updateTodo=(id)=>{
-    const newTodos =todoList.map(item=>{
-            id=route.params.id
-          if(item.id==id)
-          
-          { 
-    
-            if(textInput!='')
-            item.task=textInput
+      if(textInput=="" || day==""){
+        Alert.alert("Error","please enter all fields")
+      }
+      else{
         
-            if(day!='')
-            item.day=day            
-          }
-          return item;
-        })
-    
-        setTodoList[newTodos]
+        const newTodos =todoList.map(item=>{
+                id=route.params.id
+              if(item.id==id)
+              
+              { 
+        
+                if(textInput!='')
+                item.task=textInput
+            
+                if(day!='')
+                item.day=day            
+              }
+              return item;
+            })
+        
+            setTodoList[newTodos]
+        }
     }
   
     const nav=()=>{
-        RootNavigation.navigate('ListScreen')
+        RootNavigation.navigate('HomeScreen')
+    }
+
+    const func=()=>{
+      nav()
+      updateTodo()
     }
    
     return (
@@ -48,10 +60,8 @@ export default function UpdateItem({navigation,route}) {
         <View >
             <View>
                 <TouchableOpacity > 
-                {/* <TouchableOpacity  onPress={() => navigation.navigate('ItemDetails',{ todoId:todo.id,todoName:todo.Name,todoAge:todo.Age,todoDescription:todo.Description })}>  */}
-                    <Text style={{fontWeight:'bold', fontSize:15, color:COLORS.primary}} >Task: {route.params.task}   </Text>
-                    
-                    <Text style={{fontWeight:'bold', fontSize:15, color:COLORS.primary}}>Day: {route.params.day} </Text>
+                    <Text style={styles.tasks} >Task: {route.params.task}   </Text>
+                    <Text style={styles.tasks}>Day: {route.params.day} </Text>
 
                 </TouchableOpacity>
             </View>
@@ -60,14 +70,17 @@ export default function UpdateItem({navigation,route}) {
       <View >
       <View >
       
-        <TextInput style={styles.text} value={textInput} placeholder="Update Task" onChangeText={text=>setTextInput(text)} />
-        <TextInput style={styles.text} placeholder="Update day"   value={day} onChangeText={text=>setDay(text)}/>
+        <TextInput style={styles.input} value={textInput} placeholder="Update Task" onChangeText={text=>setTextInput(text)} />
+        <TextInput style={styles.input} placeholder="Update day"   value={day} onChangeText={text=>setDay(text)}/>
       </View>
       <TouchableOpacity>
         <View >
         <Button
         title="Update"
-        onPress={updateTodo}
+        onPress={()=>{
+          updateTodo()
+          RootNavigation.navigate('HomeScreen')
+        }}
         />
         </View>
        </TouchableOpacity>
@@ -78,8 +91,8 @@ export default function UpdateItem({navigation,route}) {
   
 
 
-  const styles=StyleSheet.style={
-    text:{
-        color: "#000000"
-    }
-  }
+//   const styles=StyleSheet.style={
+//     text:{
+//         color: "#000000"
+//     }
+//   }

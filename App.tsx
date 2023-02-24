@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './screens/Home';
-import HomeScreen from "./components/HomeScreen";
-import ListScreen from "./components/ListScreen";
-import AddTodoScreen from "./components/AddTodoScreen"
-import UpdateTodoScreen from "./components/UpdateTodoScreen"
+import HomeScreen from "./screens/HomeScreen";
+import ListScreen from "./screens/ListScreen";
+import AddTodoScreen from "./screens/AddTodoScreen"
+import UpdateTodoScreen from "./screens/UpdateTodoScreen"
 import {todoContext} from './contexts/todoContext';
 import {navigationRef} from './rootNavigation'
 
@@ -25,7 +24,6 @@ const App = () => {
           component={HomeScreen}
           // options={{title: 'Welcome'}}
         />
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="AddTodoScreen" component={AddTodoScreen} />
         <Stack.Screen name="ListScreen" component={ListScreen} />
         <Stack.Screen name="UpdateTodoScreen" component={UpdateTodoScreen} />

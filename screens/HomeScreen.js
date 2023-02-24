@@ -15,19 +15,19 @@
 
 
 import React from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
+import { Button, View, Text, StyleSheet, Pressable } from "react-native";
 import ListScreen from './ListScreen'
+import { styles } from "../styles";
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
    
-      <Button style={styles.button} 
+      <Button style={styles.btn} 
         title="Todos"
         onPress={() => navigation.navigate('ListScreen')}
       />
-     
-        <Button style={styles.button}
+        <Button style={styles.btn}
         title="Add"
         onPress={() => navigation.navigate("AddTodoScreen")}
       />
@@ -36,11 +36,3 @@ export default function HomeScreen({ navigation }) {
 }
 
 
-const styles=StyleSheet.create({
-        button:{
-            padding: 120,
-            backgroundColor: '#000000',
-        borderColor:'#000000'
-        }
-    }
-)
